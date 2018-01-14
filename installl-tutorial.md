@@ -1,27 +1,28 @@
 ﻿### procédure d'installation d'une VM scotchbox
 
 ##Etape 1 :
-Télécharger virtual box
-Télécharcher vagrant
+- Télécharger virtual box
+- Télécharcher vagrant
 
 ##Etape2 - Installer cette box
 https://app.vagrantup.com/scotch/boxes/box
 
 en faisant tout simplement
-git clone https://github.com/scotch-io/scotch-box [Mon-projet-name]
-PUIS suivi de 
-vagrant up
+- `git clone https://github.com/scotch-io/scotch-box [Mon-projet-name]`
+###### PUIS suivi de
+- `vagrant up`
 
 De là sur l'ip 192.168.33.10 nous pouvons voir si l'installation a réussi et ce qu'il y as d'installé sur la machine
 
 19/12/2017 un bug sur les versions de PHP7 ne nous permettent pas de l'utiliser complètement il faut donc ensuite se connecter avec vagrant ssh puis de faire ceci (pour PHP 7.0):
 
-sudo add-apt-repository ppa:ondrej/php
-sudo apt-get update
-sudo apt-get -y install php7.0
-sudo apt-get -y install php-xml
-sudo apt-get install php7.0-xml
-sudo apt-get install libapache2-mod-php7.0 libphp7.0-embed libssl-dev openssl php7.0-cgi php7.0-cli php7.0-common php7.0-dev php7.0-fpm php7.0-phpdbg
+    - sudo add-apt-repository ppa:ondrej/php
+    - sudo apt-get update
+    - sudo apt-get -y install php7.0
+    - sudo apt-get -y install php-xml
+    - sudo apt-get install php7.0-xml
+    - sudo apt-get install libapache2-mod-php7.0 libphp7.0-embed libssl-dev openssl php7.0-cgi php7.0-cli php7.0-common php7.0-dev php7.0-fpm php7.0-phpdbg
+
 Normalement a partir de ce moment nous devrions avoir une machine fonctionnelle
 
 ##Etape 3
@@ -77,8 +78,16 @@ Et puis c'est tout.
 
 
 ### Configuration de postgreSQL
-sudo nano /etc/postgresql/9.3/main/pg_hba.conf => host all all all password
-sudo nano /etc/postgresql/9.3/main/postgresql.conf => listen_addresses = '*'
+- `sudo nano /etc/postgresql/9.3/main/pg_hba.conf`
+    => `host all all all password`
+- `sudo nano /etc/postgresql/9.3/main/postgresql.conf`
+    => `listen_addresses = '*'`
 
 (faire gaffe aux quoite simple)
 Redemarrer la box (vagrant halt + up).
+
+
+### Mettre a jour NPM et Node JS
+NVM est installé donc :
+- `npm install -g npm`
+- `nvm install node`
