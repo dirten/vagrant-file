@@ -3,3 +3,4 @@
 - Install Vagrant 1.9.6
 
 All of this to avoid compatibility issues.
+@link : https://www.skyminds.net/serveur-dedie-upgrade-php-7-1-debian/
