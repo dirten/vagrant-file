@@ -74,6 +74,7 @@ reboot_webserver_helper() {
 # /*=========================================
 # =            CORE / BASE STUFF            =
 # =========================================*/
+sudo apt-get install apt-transport-https
 sudo apt-get update
 sudo apt-get -y upgrade
 sudo apt-get install -y build-essential
@@ -156,9 +157,10 @@ fi
 # /*===================================
 # =            INSTALL PHP            =
 # ===================================*/
-sudo apt-add-repository ppa:ondrej/php
+wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" >> /etc/apt/sources.list
 sudo apt-get update
-sudo apt-get install -y php7.1
+sudo apt-get install -y php7.0
 
 # Make PHP and Apache friends
 if [ $INSTALL_NGINX_INSTEAD != 1 ]; then
@@ -179,13 +181,13 @@ fi
 if [ $INSTALL_NGINX_INSTEAD == 1 ]; then
 
     # FPM STUFF
-    sudo apt-get install -y php7.1-fpm
-    sudo systemctl enable php7.1-fpm
-    sudo systemctl start php7.1-fpm
+    sudo apt-get install -y php7.0-fpm
+    sudo systemctl enable php7.0-fpm
+    sudo systemctl start php7.0-fpm
 
     # Fix path FPM setting
-    echo 'cgi.fix_pathinfo = 0' | sudo tee -a /etc/php/7.1/fpm/conf.d/user.ini
-    sudo systemctl restart php7.1-fpm
+    echo 'cgi.fix_pathinfo = 0' | sudo tee -a /etc/php/7.0/fpm/conf.d/user.ini
+    sudo systemctl restart php7.0-fpm
 
     # Add index.php to readable file types and enable PHP FPM since PHP alone won't work
     MY_WEB_CONFIG='server {
@@ -203,7 +205,7 @@ if [ $INSTALL_NGINX_INSTEAD == 1 ]; then
 
         location ~ \.php$ {
             include snippets/fastcgi-php.conf;
-            fastcgi_pass unix:/run/php/php7.1-fpm.sock;
+            fastcgi_pass unix:/run/php/php7.0-fpm.sock;
         }
 
         location ~ /\.ht {
@@ -221,26 +223,26 @@ fi
 # ===================================*/
 
 # Base Stuff
-sudo apt-get install -y php7.1-common
-sudo apt-get install -y php7.1-all-dev
+sudo apt-get install -y php-common
+sudo apt-get install -y php-all-dev
 
 # Common Useful Stuff
-sudo apt-get install -y php7.1-bcmath
-sudo apt-get install -y php7.1-bz2
-sudo apt-get install -y php7.1-cgi
-sudo apt-get install -y php7.1-cli
-sudo apt-get install -y php7.1-fpm
-sudo apt-get install -y php7.1-imap
-sudo apt-get install -y php7.1-intl
-sudo apt-get install -y php7.1-json
-sudo apt-get install -y php7.1-mbstring
-sudo apt-get install -y php7.1-mcrypt
-sudo apt-get install -y php7.1-odbc
-sudo apt-get install -y php7.1-pear
-sudo apt-get install -y php7.1-pspell
-sudo apt-get install -y php7.1-tidy
-sudo apt-get install -y php7.1-xmlrpc
-sudo apt-get install -y php7.1-zip
+sudo apt-get install -y php-bcmath
+sudo apt-get install -y php-bz2
+sudo apt-get install -y php-cgi
+sudo apt-get install -y php-cli
+sudo apt-get install -y php-fpm
+sudo apt-get install -y php-imap
+sudo apt-get install -y php-intl
+sudo apt-get install -y php-json
+sudo apt-get install -y php-mbstring
+sudo apt-get install -y php-mcrypt
+sudo apt-get install -y php-odbc
+sudo apt-get install -y php-pear
+sudo apt-get install -y php-pspell
+sudo apt-get install -y php-tidy
+sudo apt-get install -y php-xmlrpc
+sudo apt-get install -y php-zip
 
 # Enchant
 sudo apt-get install -y libenchant-dev
@@ -267,9 +269,9 @@ sudo apt-get install -y php-imagick
 # =            CUSTOM PHP SETTINGS            =
 # ===========================================*/
 if [ $INSTALL_NGINX_INSTEAD == 1 ]; then
-    PHP_USER_INI_PATH=/etc/php/7.1/fpm/conf.d/user.ini
+    PHP_USER_INI_PATH=/etc/php/7.0/fpm/conf.d/user.ini
 else
-    PHP_USER_INI_PATH=/etc/php/7.1/apache2/conf.d/user.ini
+    PHP_USER_INI_PATH=/etc/php/7.0/apache2/conf.d/user.ini
 fi
 
 echo 'display_startup_errors = On' | sudo tee -a $PHP_USER_INI_PATH
@@ -283,9 +285,9 @@ echo 'opache.enable = 0' | sudo tee -a $PHP_USER_INI_PATH
 
 # Absolutely Force Zend OPcache off...
 if [ $INSTALL_NGINX_INSTEAD == 1 ]; then
-    sudo sed -i s,\;opcache.enable=0,opcache.enable=0,g /etc/php/7.1/fpm/php.ini
+    sudo sed -i s,\;opcache.enable=0,opcache.enable=0,g /etc/php/7.0/fpm/php.ini
 else
-    sudo sed -i s,\;opcache.enable=0,opcache.enable=0,g /etc/php/7.1/apache2/php.ini
+    sudo sed -i s,\;opcache.enable=0,opcache.enable=0,g /etc/php/7.0/apache2/php.ini
 fi
 reboot_webserver_helper
 
@@ -356,9 +358,9 @@ sudo service mongod start
 sudo pecl install mongodb
 sudo apt-get install -y php-mongodb
 if [ $INSTALL_NGINX_INSTEAD == 1 ]; then
-    echo 'extension = mongo.so' | sudo tee -a /etc/php/7.1/fpm/conf.d/user.ini
+    echo 'extension = mongo.so' | sudo tee -a /etc/php/7.0/fpm/conf.d/user.ini
 else
-    echo 'extension = mongo.so' | sudo tee -a /etc/php/7.1/apache2/conf.d/user.ini
+    echo 'extension = mongo.so' | sudo tee -a /etc/php/7.0/apache2/conf.d/user.ini
 fi
 
 reboot_webserver_helper
@@ -492,9 +494,9 @@ sudo ln ~/go/bin/mhsendmail /usr/bin/mail
 
 # Make it work with PHP
 if [ $INSTALL_NGINX_INSTEAD == 1 ]; then
-    echo 'sendmail_path = /usr/bin/mhsendmail' | sudo tee -a /etc/php/7.1/fpm/conf.d/user.ini
+    echo 'sendmail_path = /usr/bin/mhsendmail' | sudo tee -a /etc/php/7.0/fpm/conf.d/user.ini
 else
-    echo 'sendmail_path = /usr/bin/mhsendmail' | sudo tee -a /etc/php/7.1/apache2/conf.d/user.ini
+    echo 'sendmail_path = /usr/bin/mhsendmail' | sudo tee -a /etc/php/7.0/apache2/conf.d/user.ini
 fi
 
 reboot_webserver_helper
