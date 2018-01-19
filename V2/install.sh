@@ -5,57 +5,45 @@
 # =================================*/
 INSTALL_NGINX_INSTEAD=1
 WELCOME_MESSAGE='
-░░░░░░░░░░░░░░░░▓██████▓▓▓░░░░░░░░░░░░░░░ ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-░░░░░░░░░░░░░█████▓▓█████████▓░░░░░░░░░░░ ░░░░░░░░░░░░░░░░░░░░░▓████████████████████████▒░░░░░░░░░░░░░░░░░░░░
-░░░░░░░░░░█████▓░░▓█████████████░░░░░░░░░ ░░░░░░░░░░░░░░░░░░▓█████▓▒░░░░░░░░░░░░░░░▒██████▒░░░░░░░░░░░░░░░░░░
-░░░░░░░░▓███▓░░░▓█████████████████░░░░░░░ ░░░░░░░░░░░░░░░░████▒░░░░░░░░░░░░░░░░░░░░░░░░░▓███▒░░░░░░░░░░░░░░░░
-░░░░░░░███▓░░░░░███████████████████▓░░░░░ ░░░░░░░░░░░░░░░███░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░███░░░░░░░░░░░░░░░
-░░░░░░███░░░░░░██████████████████████░░░░ ░░░░░░░░░░░░░▒██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒██░░░░░░░░░░░░░░
-░░░░░███░░░░░░░███████████████████████░░░ ░░░░░░░░░░░░▒██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██░░░░░░░░░░░░░
-░░░░███░░░░░░░░███████░░░░██████████▓█▓░░ ░░░░░░░░░░░░██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██░░░░░░░░░░░░
-░░░███▓░░░░░░░░███████░░░░▓██████████▓█░░ ░░░░░░░░░░░██▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒░░██░░░░░░░░░░░░
-░░▓███░░░░░░░░░░██████▓░░▓███████████▓██░ ░░░░░░░░░░░██░░██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██░░██░░░░░░░░░░░
-░░████░░░░░░░░░░▓████████████████████▓▓█░ ░░░░░░░░░░░██░░██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██░░██░░░░░░░░░░░
-░▓█░█▓░░░░░░░░░░░░████████████████████░██ ░░░░░░░░░░░██░░██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██░░██░░░░░░░░░░░
-░██░█░░░░░░░░░░░░░░▓██████████████████░██ ░░░░░░░░░░░██▒░██▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██▓░▒██░░░░░░░░░░░
-░█▓░█░░░░░░░░░░░░░░░░░▓███████████████░▓█ ░░░░░░░░░░░░██░░██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██░░██░░░░░░░░░░░░
-▓█▓░█▓░░░░░░░░░░░░░░░░░░██████████████░░█ ░░░░░░░░░░░░██▒░██░░░░░▒▒▓███▒░░░░░░░▒███▓▒▒░░░░░██░▓██░░░░░░░░░░░░
-██░░██░░░░░░░░░░░▓▓░░░░░░▓████████████░░█ ░░░░░░░░░░░░░██░██░░██████████▒░░░░░▓██████████░░██▒██░░░░░░░░░░░░░
-██░▓░█░░░░░░░░░░████▓░░░░░███████████▓░░█ ░░░░░░░░░░░░░░████░████████████░░░░░████████████░████░░░░░░░░░░░░░░
-██░█░██░░░░░░░░▓█████░░░░░░██████████░░▓█ ░░░░░░░░░░░░░░░███░▒██████████░░░░░░░██████████▒░██▒░░░░░░░░░▒░░░░░
-██░▓█░██░░░░░░░░████▓░░░░░░█████████░░▓▓█ ░░░▒████░░░░░░░▓█▒░░█████████░░░░░░░░░█████████░░▒█▓░░░░░░▓████░░░░
-▓█░░█░░█▓░░░░░░░░▓▓░░░░░░░░████████▓░░▓██ ░░░██░▒██▒░░░░░██░░░░██████▓░░░░█░█░░░░███████░░░░██░░░░░███░░██░░░
-░█░░█▓░▓██░░░░░░░░░░░░░░░░░███████▓░░█▓█▓ ░░░██░░░██▓░░░░██░░░░░░▒▓▓░░░░▒██░██░░░░░▓▓▒░░░░░▒██░░░░███░░░██░░░
-░██░███████▓░░░░░░░░░░░░░░██████████▓█▓█░ ░▓██▒░░░░████▓░░██░░░░░░░░░░░░███░███░░░░░░░░░░░░██░░█████░░░░▓██▒░
-░▓█░██▓░░░▓███░░░░░░░░░░▓██████▓░░░▓██▓█░ ██▓░░░░░░░░▒████████▓░░░░░░░░████░███▓░░░░░░░▒▓████████░░░░░░░░░███
-░░███▓░░░░░░░███████████████▓░░░░░░░░██▓░ ██▓▒▓███▓░░░░░░▓████████▓░░░░████░███▓░░░░▓████████▓░░░░░░████▓▓███
-░░░██░░▓▓█▓▓▓░░░▓████████▓░░░░▓▓█▓▓░░██░░ ░███████████▒░░░░░░███████░░░░██░░░██░░░░██████▓░░░░░░▓███████████░
-░░░▓█░████████▓░░░░░░░░░░░░▓████████░▓█░░ ░░░░░░░░░░▓█████░░░░██▓▓░██░░░░░░░░░░░░░██░█▒██░░░▒█████▓░░░░░░░░░░
-░░░█▓▓███████████░░░░░░░░████████████░█▓░ ░░░░░░░░░░░░░▒█████▒▒█▓█░███▓▓▒▒▒▓▒▒▓▓▓███▒███░▓█████░░░░░░░░░░░░░░
-░░░█░█████████████░░░░░░█████████████░██░ ░░░░░░░░░░░░░░░░░▒████▒▓█▒▒█░█▒█░█░█▓█▒█▓░█░█████▒░░░░░░░░░░░░░░░░░
-░░▓█░▓████████████░░░░░░█████████████░░█░ ░░░░░░░░░░░░░░░░░░░░██░░██▓█▓█▓█▒█▒█▓█▓████░▓█▓░░░░░░░░░░░░░░░░░░░░
-░░▓█░▓▓███████████░░░░░░███████████▓▓░░█░ ░░░░░░░░░░░░░░░░░▓████▓░▓█▓█░█▒█░█░█▒█▒███▒░██████░░░░░░░░░░░░░░░░░
-░░▓█░░░▓█████████░░░░░░░░█████████▓░░░░█░ ░░░░░░░░░░░░░▓█████░░██░░░▒█████▓█▓█████▒░░░██░▒█████▓░░░░░░░░░░░░░
-░░░█▓░░░████████░░░░░░░░░░████████░░░░██░ ░░░░▒██████████▓░░░░░███░░░░░░░░░░░░░░░░░░░██▒░░░░░▓██████████▒░░░░
-░░░██░░░░░█████░░░░████░░░░█████▓░░░░░█▓░ ░░░░██░░░▓▓▓░░░░░░▒██████▓░░░░░░░░░░░░░░░███████▒░░░░░░▓▓▒░░▒██░░░░
-░░░░██░░░░░░░░░░░░██████░░░░░░░░░░▓░░██░░ ░░░░▓██░░░░░░░░▓████▓░░░█████▒░░░░░░▒▓█████░░░▓████▓░░░░░░░▒██▓░░░░
-░░░░▓████▓░░░░░░░░███▓██▓░░░░░░░░█████░░░ ░░░░░░███░░░░████▒░░░░░░░░▓█████████████▒░░░░░░░░▒████░░░░███░░░░░░
-░░░░░▓█▓████▓░░░░░██░▓▓██░░░░▓████░██░░░░ ░░░░░░░██░░░██▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓██░░░██░░░░░░░
-░░░░░░░░▓█▓██░▓░░░██▓▓▓██░░█▓█████░░░░░░░ ░░░░░░░██▒▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒██▒▓██░░░░░░░
-░░░░░░░░▓█░███▓░░░▓▓▓░▓░░░░░█▓██▓█░░░░░░░ ░░░░░░░░████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░████░░░░░░░░
-░░░░░░░░▓█░██▓░░▓░░░░░░░░░▓░███▓▓█░░░░░░░ ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-░░░░░░░░▓█░███▓███▓░░░░░▓███▓██░▓█░░░░░░░ 
-░░░░░░░░██░░██░▓░█████████░▓▓█▓░▓█░░░░░░░
-░░░░░░░░▓█░░▓██▓▓░░▓░█░█░▓░▓██░░░█░░░░░░░
-░░░░░░░░░█▓░░████░▓░░▓░░▓▓███░░░██░░░░░░░
-░░░░░░░░░▓█▓░░████████▓█████░░░██▓░░░░░░░
-░░░░░░░░░░░██░░▓▓▓▓▓▓▓▓▓▓▓█░░░██░░░░░░░░░
-░░░░░░░░░░░░██░░▓█████▓██▓░░▓██░░░░░░░░░░
-░░░░░░░░░░░░░██░░░░░▓▓░░░░░███░░░░░░░░░░░
-░░░░░░░░░░░░░░██░░░░░░░░░░██▓░░░░░░░░░░░░
-░░░░░░░░░░░░░░▓██░░░░░░░░██░░░░░░░░░░░░░░
-░░░░░░░░░░░░░░░░██████████░░░░░░░░░░░░░░░
-
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+░░░░░░░░░░░░░░░░░░░░░▓████████████████████████▒░░░░░░░░░░░░░░░░░░░░
+░░░░░░░░░░░░░░░░░░▓█████▓▒░░░░░░░░░░░░░░░▒██████▒░░░░░░░░░░░░░░░░░░
+░░░░░░░░░░░░░░░░████▒░░░░░░░░░░░░░░░░░░░░░░░░░▓███▒░░░░░░░░░░░░░░░░
+░░░░░░░░░░░░░░░███░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░███░░░░░░░░░░░░░░░
+░░░░░░░░░░░░░▒██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒██░░░░░░░░░░░░░░
+░░░░░░░░░░░░▒██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██░░░░░░░░░░░░░
+░░░░░░░░░░░░██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██░░░░░░░░░░░░
+░░░░░░░░░░░██▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒░░██░░░░░░░░░░░░
+░░░░░░░░░░░██░░██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██░░██░░░░░░░░░░░
+░░░░░░░░░░░██░░██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██░░██░░░░░░░░░░░
+░░░░░░░░░░░██░░██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██░░██░░░░░░░░░░░
+░░░░░░░░░░░██▒░██▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██▓░▒██░░░░░░░░░░░
+░░░░░░░░░░░░██░░██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██░░██░░░░░░░░░░░░
+░░░░░░░░░░░░██▒░██░░░░░▒▒▓███▒░░░░░░░▒███▓▒▒░░░░░██░▓██░░░░░░░░░░░░
+░░░░░░░░░░░░░██░██░░██████████▒░░░░░▓██████████░░██▒██░░░░░░░░░░░░░
+░░░░░░░░░░░░░░████░████████████░░░░░████████████░████░░░░░░░░░░░░░░
+░░░░░░░░░░░░░░░███░▒██████████░░░░░░░██████████▒░██▒░░░░░░░░░▒░░░░░
+░░░▒████░░░░░░░▓█▒░░█████████░░░░░░░░░█████████░░▒█▓░░░░░░▓████░░░░
+░░░██░▒██▒░░░░░██░░░░██████▓░░░░█░█░░░░███████░░░░██░░░░░███░░██░░░
+░░░██░░░██▓░░░░██░░░░░░▒▓▓░░░░▒██░██░░░░░▓▓▒░░░░░▒██░░░░███░░░██░░░
+░▓██▒░░░░████▓░░██░░░░░░░░░░░░███░███░░░░░░░░░░░░██░░█████░░░░▓██▒░
+██▓░░░░░░░░▒████████▓░░░░░░░░████░███▓░░░░░░░▒▓████████░░░░░░░░░███
+██▓▒▓███▓░░░░░░▓████████▓░░░░████░███▓░░░░▓████████▓░░░░░░████▓▓███
+░███████████▒░░░░░░███████░░░░██░░░██░░░░██████▓░░░░░░▓███████████░
+░░░░░░░░░░▓█████░░░░██▓▓░██░░░░░░░░░░░░░██░█▒██░░░▒█████▓░░░░░░░░░░
+░░░░░░░░░░░░░▒█████▒▒█▓█░███▓▓▒▒▒▓▒▒▓▓▓███▒███░▓█████░░░░░░░░░░░░░░
+░░░░░░░░░░░░░░░░░▒████▒▓█▒▒█░█▒█░█░█▓█▒█▓░█░█████▒░░░░░░░░░░░░░░░░░
+░░░░░░░░░░░░░░░░░░░░██░░██▓█▓█▓█▒█▒█▓█▓████░▓█▓░░░░░░░░░░░░░░░░░░░░
+░░░░░░░░░░░░░░░░░▓████▓░▓█▓█░█▒█░█░█▒█▒███▒░██████░░░░░░░░░░░░░░░░░
+░░░░░░░░░░░░░▓█████░░██░░░▒█████▓█▓█████▒░░░██░▒█████▓░░░░░░░░░░░░░
+░░░░▒██████████▓░░░░░███░░░░░░░░░░░░░░░░░░░██▒░░░░░▓██████████▒░░░░
+░░░░██░░░▓▓▓░░░░░░▒██████▓░░░░░░░░░░░░░░░███████▒░░░░░░▓▓▒░░▒██░░░░
+░░░░▓██░░░░░░░░▓████▓░░░█████▒░░░░░░▒▓█████░░░▓████▓░░░░░░░▒██▓░░░░
+░░░░░░███░░░░████▒░░░░░░░░▓█████████████▒░░░░░░░░▒████░░░░███░░░░░░
+░░░░░░░██░░░██▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓██░░░██░░░░░░░
+░░░░░░░██▒▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒██▒▓██░░░░░░░
+░░░░░░░░████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░████░░░░░░░░
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
  _       __     __                             __  __            ___ 
 | |     / /__  / /________  ____ ___  ___     / / / /___  ____  / (_)
@@ -75,7 +63,7 @@ reboot_webserver_helper() {
     fi
 
     if [ $INSTALL_NGINX_INSTEAD == 1 ]; then
-        sudo systemctl restart php7.1-fpm
+        sudo systemctl restart php7-fpm
         sudo systemctl restart nginx
     fi
 
@@ -91,8 +79,8 @@ sudo apt-get -y upgrade
 sudo apt-get install -y build-essential
 sudo apt-get install -y tcl
 sudo apt-get install -y software-properties-common
-sudo apt-get -y install vim
-sudo apt-get -y install git
+sudo apt-get install -y vim
+sudo apt-get install -y git
 
 # /*======================================
 # =            INSTALL APACHE            =
@@ -100,7 +88,7 @@ sudo apt-get -y install git
 if [ $INSTALL_NGINX_INSTEAD != 1 ]; then
 
     # Install the package
-    sudo apt-get -y install apache2
+    sudo apt-get install -y apache2
 
     # Remove "html" and add public
     mv /var/www/html /var/www/public
@@ -139,7 +127,7 @@ fi
 if [ $INSTALL_NGINX_INSTEAD == 1 ]; then
 
     # Install Nginx
-    sudo apt-get -y install nginx
+    sudo apt-get install -y nginx
     sudo systemctl enable nginx
 
     # Remove "html" and add public
@@ -168,12 +156,14 @@ fi
 # /*===================================
 # =            INSTALL PHP            =
 # ===================================*/
-sudo apt-get -y install php
+sudo apt-add-repository ppa:ondrej/php
+sudo apt-get update
+sudo apt-get install -y php7.1
 
 # Make PHP and Apache friends
 if [ $INSTALL_NGINX_INSTEAD != 1 ]; then
 
-    sudo apt-get -y install libapache2-mod-php
+    sudo apt-get install -y libapache2-mod-php
 
     # Add index.php to readable file types
     MAKE_PHP_PRIORITY='<IfModule mod_dir.c>
@@ -189,7 +179,7 @@ fi
 if [ $INSTALL_NGINX_INSTEAD == 1 ]; then
 
     # FPM STUFF
-    sudo apt-get -y install php7.1-fpm
+    sudo apt-get install -y php7.1-fpm
     sudo systemctl enable php7.1-fpm
     sudo systemctl start php7.1-fpm
 
@@ -231,46 +221,46 @@ fi
 # ===================================*/
 
 # Base Stuff
-sudo apt-get -y install php7.1-common
-sudo apt-get -y install php7.1-all-dev
+sudo apt-get install -y php7.1-common
+sudo apt-get install -y php7.1-all-dev
 
 # Common Useful Stuff
-sudo apt-get -y install php7.1bcmath
-sudo apt-get -y install php7.1bz2
-sudo apt-get -y install php7.1cgi
-sudo apt-get -y install php7.1cli
-sudo apt-get -y install php7.1fpm
-sudo apt-get -y install php7.1imap
-sudo apt-get -y install php7.1-intl
-sudo apt-get -y install php7.1-json
-sudo apt-get -y install php7.1-mbstring
-sudo apt-get -y install php7.1-mcrypt
-sudo apt-get -y install php7.1odbc
-sudo apt-get -y install php7.1pear
-sudo apt-get -y install php7.1pspell
-sudo apt-get -y install php7.1tidy
-sudo apt-get -y install php7.1xmlrpc
-sudo apt-get -y install php7.1zip
+sudo apt-get install -y php7.1-bcmath
+sudo apt-get install -y php7.1-bz2
+sudo apt-get install -y php7.1-cgi
+sudo apt-get install -y php7.1-cli
+sudo apt-get install -y php7.1-fpm
+sudo apt-get install -y php7.1-imap
+sudo apt-get install -y php7.1-intl
+sudo apt-get install -y php7.1-json
+sudo apt-get install -y php7.1-mbstring
+sudo apt-get install -y php7.1-mcrypt
+sudo apt-get install -y php7.1-odbc
+sudo apt-get install -y php7.1-pear
+sudo apt-get install -y php7.1-pspell
+sudo apt-get install -y php7.1-tidy
+sudo apt-get install -y php7.1-xmlrpc
+sudo apt-get install -y php7.1-zip
 
 # Enchant
-sudo apt-get -y install libenchant-dev
-sudo apt-get -y install php-enchant
+sudo apt-get install -y libenchant-dev
+sudo apt-get install -y php-enchant
 
 # LDAP
-sudo apt-get -y install ldap-utils
-sudo apt-get -y install php-ldap
+sudo apt-get install -y ldap-utils
+sudo apt-get install -y php-ldap
 
 # CURL
-sudo apt-get -y install curl
-sudo apt-get -y install php-curl
+sudo apt-get install -y curl
+sudo apt-get install -y php-curl
 
 # GD
-sudo apt-get -y install libgd2-xpm-dev
-sudo apt-get -y install php-gd
+sudo apt-get install -y libgd2-xpm-dev
+sudo apt-get install -y php-gd
 
 # IMAGE MAGIC
-sudo apt-get -y install imagemagick
-sudo apt-get -y install php-imagick
+sudo apt-get install -y imagemagick
+sudo apt-get install -y php-imagick
 
 
 # /*===========================================
@@ -312,19 +302,19 @@ reboot_webserver_helper
 # =============================*/
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'
-sudo apt-get -y install mysql-server
+sudo apt-get install -y mysql-server
 sudo mysqladmin -uroot -proot create scotchbox
-sudo apt-get -y install php-mysql
+sudo apt-get install -y php-mysql
 reboot_webserver_helper
 
 
 # /*=================================
 # =            PostreSQL            =
 # =================================*/
-sudo apt-get -y install postgresql postgresql-contrib
+sudo apt-get install -y postgresql postgresql-contrib
 echo "CREATE ROLE root WITH LOGIN ENCRYPTED PASSWORD 'root';" | sudo -i -u postgres psql
 sudo -i -u postgres createdb --owner=root scotchbox
-sudo apt-get -y install php-pgsql
+sudo apt-get install -y php-pgsql
 reboot_webserver_helper
 # JG : Penser a mettre a jour pour pgadmin les fichiers de config
 
@@ -332,8 +322,8 @@ reboot_webserver_helper
 # /*==============================
 # =            SQLITE            =
 # ===============================*/
-sudo apt-get -y install sqlite
-sudo apt-get -y install php-sqlite3
+sudo apt-get install -y sqlite
+sudo apt-get install -y php-sqlite3
 reboot_webserver_helper
 
 
@@ -387,7 +377,7 @@ sudo chmod 755 /usr/local/bin/composer
 # /*==================================
 # =            BEANSTALKD            =
 # ==================================*/
-sudo apt-get -y install beanstalkd
+sudo apt-get install -y beanstalkd
 
 # /*==============================
 # =            WP-CLI            =
@@ -412,8 +402,8 @@ sudo apt-get install ngrok-client
 # /*==============================
 # =            NODEJS            =
 # ==============================*/
-sudo apt-get -y install nodejs
-sudo apt-get -y install npm
+sudo apt-get install -y nodejs
+sudo apt-get install -y npm
 
 # Use NVM though to make life easy
 wget -qO- https://raw.github.com/creationix/nvm/master/install.sh | bash
@@ -436,13 +426,13 @@ sudo npm install -g webpack
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 sudo apt-get update
-sudo apt-get -y install yarn
+sudo apt-get install -y yarn
 
 # /*============================
 # =            RUBY            =
 # ============================*/
-sudo apt-get -y install ruby
-sudo apt-get -y install ruby-dev
+sudo apt-get install -y ruby
+sudo apt-get install -y ruby-dev
 
 # Use RVM though to make life easy
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
@@ -454,16 +444,16 @@ rvm use 2.4.1
 # /*=============================
 # =            REDIS            =
 # =============================*/
-sudo apt-get -y install redis-server
-sudo apt-get -y install php-redis
+sudo apt-get install -y redis-server
+sudo apt-get install -y php-redis
 reboot_webserver_helper
 
 
 # /*=================================
 # =            MEMCACHED            =
 # =================================*/
-sudo apt-get -y install memcached
-sudo apt-get -y install php-memcached
+sudo apt-get install -y memcached
+sudo apt-get install -y php-memcached
 reboot_webserver_helper
 
 
@@ -472,7 +462,7 @@ reboot_webserver_helper
 # ==============================*/
 sudo add-apt-repository -y ppa:longsleep/golang-backports
 sudo apt-get update
-sudo apt-get -y install golang-go
+sudo apt-get install -y golang-go
 
 # /*===============================
 # =            MAILHOG            =
