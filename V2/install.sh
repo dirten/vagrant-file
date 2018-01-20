@@ -311,11 +311,11 @@ reboot_webserver_helper
 # =================================*/
 sudo apt-get install -y postgresql postgresql-contrib
 echo "CREATE ROLE root WITH LOGIN ENCRYPTED PASSWORD 'root';" | sudo -i -u postgres psql
-sudo -i -u postgres createdb --owner=root scotchbox
+sudo -i -u postgres createdb --owner=root hooli
 sudo apt-get install -y php7.1-pgsql
 # On met a jour les fichiers de configuration postgres que la connexion avec pgadmin se fasse facilement
-sudo echo "host all all all password" | sudo tee -a /etc/postgresql/9.3/main/pg_hba.conf > /dev/null
-sudo echo "listen_addresses = '*'" | sudo tee -a /etc/postgresql/9.3/main/postgresql.conf > /dev/null
+sudo echo "host all all all password" | sudo tee -a /etc/postgresql/9.4/main/pg_hba.conf > /dev/null
+sudo echo "listen_addresses = '*'" | sudo tee -a /etc/postgresql/9.4/main/postgresql.conf > /dev/null
 reboot_webserver_helper
 
 
@@ -437,7 +437,7 @@ sudo apt-get install -y ruby-dev
 
 # Use RVM though to make life easy
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-\curl -sSL https://get.rvm.io | bash -s stable
+curl -sSL https://get.rvm.io | bash -s stable
 source ~/.rvm/scripts/rvm
 rvm install 2.4.1
 rvm use 2.4.1
@@ -448,13 +448,17 @@ rvm use 2.4.1
 # https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-get-on-debian-8
 # JDK contient JRE donc inutile d'installer JRE avec : sudo apt-get install default-jre
 sudo apt-get install -y software-properties-common
-sudo add-apt-repository ppa:webupd8team/java -y
+echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | sudo tee /etc/apt/sources.list.d/webupd8team-java.list
+echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/webupd8team-java.list
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
 sudo apt-get update
+
 # Permet de faire une installation silencieuse de JAVA... obligatoire pour vagrant up
 echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
 echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
 
 # see https://stackoverflow.com/questions/46815897/jdk-8-is-not-installed-error-404-not-found
+# ne marche pas sur le vagrantfile
 cd /var/lib/dpkg/info
 sudo sed -i 's|JAVA_VERSION=8u151|JAVA_VERSION=8u162|' oracle-java8-installer.*
 sudo sed -i 's|PARTNER_URL=http://download.oracle.com/otn-pub/java/jdk/8u151-b12/e758a0de34e24606bca991d704f6dcbf/|PARTNER_URL=http://download.oracle.com/otn-pub/java/jdk/8u162-b12/0da788060d494f5095bf8624735fa2f1/|' oracle-java8-installer.*
@@ -474,7 +478,7 @@ sudo wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-ke
 sudo echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-6.x.list
 sudo apt-get update
 sudo apt-get install elasticsearch
-# Démarre automatiquement elastisearch au boot
+# Démarre automatiquement elastisearch au boot via un daemon
 sudo /bin/systemctl daemon-reload
 
    ELASTIC_CONFIG='
@@ -512,19 +516,16 @@ reboot_webserver_helper
 # Nécessaire pour MailHog
 sudo wget https://storage.googleapis.com/golang/go1.9.2.linux-amd64.tar.gz
 sudo tar -xvf go1.9.2.linux-amd64.tar.gz
-sudo mv go /usr/local
-mkdir gocode
-export GOPATH=/usr/home/gocode
-export GOROOT=/etc/go
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+sudo mv go /etc/
+sudo -u vagrant mkdir ~/gocode
 
 
 # /*===============================
 # =            MAILHOG            =
 # ===============================*/
-sudo wget --quiet -O ~/mailhog https://github.com/mailhog/MailHog/releases/download/v1.0.0/MailHog_linux_amd64
-sudo chmod +x ~/mailhog
+sudo go get github.com/mailhog/MailHog
 
+# Ne marche pas via le VagrantFile
 # Enable and Turn on
 sudo tee /etc/systemd/system/mailhog.service <<EOL
 [Unit]
@@ -532,7 +533,7 @@ Description=MailHog Service
 After=network.service vagrant.mount
 [Service]
 Type=simple
-ExecStart=/usr/bin/env /home/vagrant/mailhog > /dev/null 2>&1 &
+ExecStart=/usr/bin/env /home/vagrant/gocode/bin/MailHog > /dev/null 2>&1 &
 [Install]
 WantedBy=multi-user.target
 EOL
@@ -541,9 +542,9 @@ sudo systemctl start mailhog
 
 # Install Sendmail replacement for MailHog
 sudo go get github.com/mailhog/mhsendmail
-sudo ln ~/go/bin/mhsendmail /usr/bin/mhsendmail
-sudo ln ~/go/bin/mhsendmail /usr/bin/sendmail
-sudo ln ~/go/bin/mhsendmail /usr/bin/mail
+sudo ln ~/gocode/bin/mhsendmail /usr/bin/mhsendmail
+sudo ln ~/gocode/bin/mhsendmail /usr/bin/sendmail
+sudo ln ~/gocode/bin/mhsendmail /usr/bin/mail
 
 # Make it work with PHP
 if [ $INSTALL_NGINX_INSTEAD == 1 ]; then
