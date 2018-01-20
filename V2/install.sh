@@ -447,12 +447,16 @@ rvm use 2.4.1
 # ======================*/
 # https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-get-on-debian-8
 # JDK contient JRE donc inutile d'installer JRE avec : sudo apt-get install default-jre
-sudo apt-get install -y default-jdk
+sudo apt-get install -y software-properties-common
+sudo add-apt-repository "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main"
+sudo apt-get update
+sudo apt-get install -y oracle-java8-installer
 
 # /*===============================
 # =            ELASTICSEARCH      =
 # ===============================*/
 # https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html#deb-running-systemd
+# https://www.it-connect.fr/installer-java-sous-debian-8-via-apt-get/
 # Port used 9200
 sudo wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
 sudo echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-6.x.list
@@ -462,6 +466,15 @@ sudo apt-get install elasticsearch
 sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable elasticsearch.service
 sudo systemctl start elasticsearch.service
+
+   ELASTIC_CONFIG='
+    cluster.name:hooli
+    node.name: "node-1"
+    network.host: 0.0.0.0
+    network.bind_host: localhost
+    network.publish_host: 0.0.0.0
+   '
+    echo "$ELASTIC_CONFIG" | sudo tee -a /etc/elasticsearch/elasticsearch.yml
 
 # /*=============================
 # =            REDIS            =
