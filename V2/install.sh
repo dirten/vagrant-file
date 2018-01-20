@@ -50,10 +50,7 @@ WELCOME_MESSAGE='
 | | /| / / _ \/ / ___/ __ \/ __ `__ \/ _ \   / /_/ / __ \/ __ \/ / / 
 | |/ |/ /  __/ / /__/ /_/ / / / / / /  __/  / __  / /_/ / /_/ / / /  
 |__/|__/\___/_/\___/\____/_/ /_/ /_/\___/  /_/ /_/\____/\____/_/_/   
-                                                                     
 
-
-For help, please visit box.scotch.io or scotch.io. Follow us on Twitter @scotch_io and @whatnicktweets.
 '
 
 reboot_webserver_helper() {
@@ -63,7 +60,7 @@ reboot_webserver_helper() {
     fi
 
     if [ $INSTALL_NGINX_INSTEAD == 1 ]; then
-        sudo systemctl restart php7-fpm
+        sudo systemctl restart php7.1-fpm
         sudo systemctl restart nginx
     fi
 
@@ -74,7 +71,7 @@ reboot_webserver_helper() {
 # /*=========================================
 # =            CORE / BASE STUFF            =
 # =========================================*/
-sudo apt-get install apt-transport-https
+sudo apt-get install -y apt-transport-https
 sudo apt-get update
 sudo apt-get -y upgrade
 sudo apt-get install -y build-essential
@@ -157,10 +154,10 @@ fi
 # /*===================================
 # =            INSTALL PHP            =
 # ===================================*/
-wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
-echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" >> /etc/apt/sources.list
+sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+sudo echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
 sudo apt-get update
-sudo apt-get install -y php7.0
+sudo apt-get install -y php7.1
 
 # Make PHP and Apache friends
 if [ $INSTALL_NGINX_INSTEAD != 1 ]; then
@@ -181,13 +178,13 @@ fi
 if [ $INSTALL_NGINX_INSTEAD == 1 ]; then
 
     # FPM STUFF
-    sudo apt-get install -y php7.0-fpm
-    sudo systemctl enable php7.0-fpm
-    sudo systemctl start php7.0-fpm
+    sudo apt-get install -y php7.1-fpm
+    sudo systemctl enable php7.1-fpm
+    sudo systemctl start php7.1-fpm
 
     # Fix path FPM setting
-    echo 'cgi.fix_pathinfo = 0' | sudo tee -a /etc/php/7.0/fpm/conf.d/user.ini
-    sudo systemctl restart php7.0-fpm
+    echo 'cgi.fix_pathinfo = 0' | sudo tee -a /etc/php/7.1/fpm/conf.d/user.ini
+    sudo systemctl restart php7.1-fpm
 
     # Add index.php to readable file types and enable PHP FPM since PHP alone won't work
     MY_WEB_CONFIG='server {
@@ -223,55 +220,54 @@ fi
 # ===================================*/
 
 # Base Stuff
-sudo apt-get install -y php-common
-sudo apt-get install -y php-all-dev
+# sudo apt-get install -y php-common
+# sudo apt-get install -y php-all-dev
 
 # Common Useful Stuff
-sudo apt-get install -y php-bcmath
-sudo apt-get install -y php-bz2
-sudo apt-get install -y php-cgi
-sudo apt-get install -y php-cli
-sudo apt-get install -y php-fpm
-sudo apt-get install -y php-imap
-sudo apt-get install -y php-intl
-sudo apt-get install -y php-json
-sudo apt-get install -y php-mbstring
-sudo apt-get install -y php-mcrypt
-sudo apt-get install -y php-odbc
-sudo apt-get install -y php-pear
-sudo apt-get install -y php-pspell
-sudo apt-get install -y php-tidy
-sudo apt-get install -y php-xmlrpc
-sudo apt-get install -y php-zip
+sudo apt-get install -y php7.1-bcmath
+sudo apt-get install -y php7.1-bz2
+sudo apt-get install -y php7.1-cgi
+sudo apt-get install -y php7.1-cli
+sudo apt-get install -y php7.1-imap
+sudo apt-get install -y php7.1-intl
+sudo apt-get install -y php7.1-json
+sudo apt-get install -y php7.1-mbstring
+sudo apt-get install -y php7.1-mcrypt
+sudo apt-get install -y php7.1-odbc
+sudo apt-get install -y php7.1-pear
+sudo apt-get install -y php7.1-pspell
+sudo apt-get install -y php7.1-tidy
+sudo apt-get install -y php7.1-xmlrpc
+sudo apt-get install -y php7.1-zip
 
 # Enchant
 sudo apt-get install -y libenchant-dev
-sudo apt-get install -y php-enchant
+sudo apt-get install -y php7.1-enchant
 
 # LDAP
 sudo apt-get install -y ldap-utils
-sudo apt-get install -y php-ldap
+sudo apt-get install -y php7.1-ldap
 
 # CURL
 sudo apt-get install -y curl
-sudo apt-get install -y php-curl
+sudo apt-get install -y php7.1-curl
 
 # GD
 sudo apt-get install -y libgd2-xpm-dev
-sudo apt-get install -y php-gd
+sudo apt-get install -y php7.1-gd
 
 # IMAGE MAGIC
 sudo apt-get install -y imagemagick
-sudo apt-get install -y php-imagick
+sudo apt-get install -y php7.1-imagick
 
 
 # /*===========================================
 # =            CUSTOM PHP SETTINGS            =
 # ===========================================*/
 if [ $INSTALL_NGINX_INSTEAD == 1 ]; then
-    PHP_USER_INI_PATH=/etc/php/7.0/fpm/conf.d/user.ini
+    PHP_USER_INI_PATH=/etc/php/7.1/fpm/conf.d/user.ini
 else
-    PHP_USER_INI_PATH=/etc/php/7.0/apache2/conf.d/user.ini
+    PHP_USER_INI_PATH=/etc/php/7.1/apache2/conf.d/user.ini
 fi
 
 echo 'display_startup_errors = On' | sudo tee -a $PHP_USER_INI_PATH
@@ -285,9 +281,9 @@ echo 'opache.enable = 0' | sudo tee -a $PHP_USER_INI_PATH
 
 # Absolutely Force Zend OPcache off...
 if [ $INSTALL_NGINX_INSTEAD == 1 ]; then
-    sudo sed -i s,\;opcache.enable=0,opcache.enable=0,g /etc/php/7.0/fpm/php.ini
+    sudo sed -i s,\;opcache.enable=0,opcache.enable=0,g /etc/php/7.1/fpm/php.ini
 else
-    sudo sed -i s,\;opcache.enable=0,opcache.enable=0,g /etc/php/7.0/apache2/php.ini
+    sudo sed -i s,\;opcache.enable=0,opcache.enable=0,g /etc/php/7.1/apache2/php.ini
 fi
 reboot_webserver_helper
 
@@ -306,7 +302,7 @@ sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password passwor
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'
 sudo apt-get install -y mysql-server
 sudo mysqladmin -uroot -proot create scotchbox
-sudo apt-get install -y php-mysql
+sudo apt-get install -y php7.1-mysql
 reboot_webserver_helper
 
 
@@ -316,16 +312,18 @@ reboot_webserver_helper
 sudo apt-get install -y postgresql postgresql-contrib
 echo "CREATE ROLE root WITH LOGIN ENCRYPTED PASSWORD 'root';" | sudo -i -u postgres psql
 sudo -i -u postgres createdb --owner=root scotchbox
-sudo apt-get install -y php-pgsql
+sudo apt-get install -y php7.1-pgsql
+# On met a jour les fichiers de configuration postgres que la connexion avec pgadmin se fasse facilement
+sudo echo "host all all all password" | sudo tee -a /etc/postgresql/9.3/main/pg_hba.conf > /dev/null
+sudo echo "listen_addresses = '*'" | sudo tee -a /etc/postgresql/9.3/main/postgresql.conf > /dev/null
 reboot_webserver_helper
-# JG : Penser a mettre a jour pour pgadmin les fichiers de config
 
 
 # /*==============================
 # =            SQLITE            =
 # ===============================*/
 sudo apt-get install -y sqlite
-sudo apt-get install -y php-sqlite3
+sudo apt-get install -y php7.1-sqlite3
 reboot_webserver_helper
 
 
@@ -356,11 +354,11 @@ sudo service mongod start
 
 # Enable it for PHP
 sudo pecl install mongodb
-sudo apt-get install -y php-mongodb
+sudo apt-get install -y php7.1-mongodb
 if [ $INSTALL_NGINX_INSTEAD == 1 ]; then
-    echo 'extension = mongo.so' | sudo tee -a /etc/php/7.0/fpm/conf.d/user.ini
+    echo 'extension = mongo.so' | sudo tee -a /etc/php/7.1/fpm/conf.d/user.ini
 else
-    echo 'extension = mongo.so' | sudo tee -a /etc/php/7.0/apache2/conf.d/user.ini
+    echo 'extension = mongo.so' | sudo tee -a /etc/php/7.1/apache2/conf.d/user.ini
 fi
 
 reboot_webserver_helper
@@ -392,14 +390,15 @@ sudo mv wp-cli.phar /usr/local/bin/wp
 # /*=============================
 # =            DRUSH            =
 # =============================*/
-wget http://files.drush.org/drush.phar
-sudo chmod +x drush.phar
-sudo mv drush.phar /usr/local/bin/drush
+# Utile pour Drupal
+# wget http://files.drush.org/drush.phar
+# sudo chmod +x drush.phar
+# sudo mv drush.phar /usr/local/bin/drush
 
 # /*=============================
 # =            NGROK            =
 # =============================*/
-sudo apt-get install ngrok-client
+# sudo apt-get install ngrok-client
 
 # /*==============================
 # =            NODEJS            =
@@ -413,22 +412,22 @@ source ~/.nvm/nvm.sh
 nvm install 6.10.3
 
 # Node Packages
-sudo npm install -g gulp
-sudo npm install -g grunt
-sudo npm install -g bower
-sudo npm install -g yo
-sudo npm install -g browser-sync
-sudo npm install -g browserify
-sudo npm install -g pm2
-sudo npm install -g webpack
+# sudo npm install -g gulp
+# sudo npm install -g grunt
+# sudo npm install -g bower
+# sudo npm install -g yo
+# sudo npm install -g browser-sync
+# sudo npm install -g browserify
+# sudo npm install -g pm2
+# sudo npm install -g webpack
 
 # /*============================
 # =            YARN            =
 # ============================*/
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-sudo apt-get update
-sudo apt-get install -y yarn
+# sudo curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+# sudo echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+# sudo apt-get update
+# sudo apt-get install -y yarn
 
 # /*============================
 # =            RUBY            =
@@ -443,11 +442,32 @@ source ~/.rvm/scripts/rvm
 rvm install 2.4.1
 rvm use 2.4.1
 
+# /*======================
+# =            JAVA      =
+# ======================*/
+# https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-get-on-debian-8
+# JDK contient JRE donc inutile d'installer JRE avec : sudo apt-get install default-jre
+sudo apt-get install -y default-jdk
+
+# /*===============================
+# =            ELASTICSEARCH      =
+# ===============================*/
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html#deb-running-systemd
+# Port used 9200
+sudo wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+sudo echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-6.x.list
+sudo apt-get update
+sudo apt-get install elasticsearch
+# Démarre automatiquement elastisearch au boot
+sudo /bin/systemctl daemon-reload
+sudo /bin/systemctl enable elasticsearch.service
+sudo systemctl start elasticsearch.service
+
 # /*=============================
 # =            REDIS            =
 # =============================*/
 sudo apt-get install -y redis-server
-sudo apt-get install -y php-redis
+sudo apt-get install -y php7.1-redis
 reboot_webserver_helper
 
 
@@ -455,13 +475,14 @@ reboot_webserver_helper
 # =            MEMCACHED            =
 # =================================*/
 sudo apt-get install -y memcached
-sudo apt-get install -y php-memcached
+sudo apt-get install -y php7.1-memcached
 reboot_webserver_helper
 
 
 # /*==============================
 # =            GOLANG            =
 # ==============================*/
+# Nécessaire pour MailHog
 sudo add-apt-repository -y ppa:longsleep/golang-backports
 sudo apt-get update
 sudo apt-get install -y golang-go
@@ -494,9 +515,9 @@ sudo ln ~/go/bin/mhsendmail /usr/bin/mail
 
 # Make it work with PHP
 if [ $INSTALL_NGINX_INSTEAD == 1 ]; then
-    echo 'sendmail_path = /usr/bin/mhsendmail' | sudo tee -a /etc/php/7.0/fpm/conf.d/user.ini
+    echo 'sendmail_path = /usr/bin/mhsendmail' | sudo tee -a /etc/php/7.1/fpm/conf.d/user.ini
 else
-    echo 'sendmail_path = /usr/bin/mhsendmail' | sudo tee -a /etc/php/7.0/apache2/conf.d/user.ini
+    echo 'sendmail_path = /usr/bin/mhsendmail' | sudo tee -a /etc/php/7.1/apache2/conf.d/user.ini
 fi
 
 reboot_webserver_helper
