@@ -202,7 +202,7 @@ if [ $INSTALL_NGINX_INSTEAD == 1 ]; then
 
         location ~ \.php$ {
             include snippets/fastcgi-php.conf;
-            fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+            fastcgi_pass unix:/run/php/php7.1-fpm.sock;
         }
 
         location ~ /\.ht {
@@ -458,12 +458,11 @@ echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-
 echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
 
 # see https://stackoverflow.com/questions/46815897/jdk-8-is-not-installed-error-404-not-found
-# ne marche pas sur le vagrantfile
-cd /var/lib/dpkg/info
-sudo sed -i 's|JAVA_VERSION=8u151|JAVA_VERSION=8u162|' oracle-java8-installer.*
-sudo sed -i 's|PARTNER_URL=http://download.oracle.com/otn-pub/java/jdk/8u151-b12/e758a0de34e24606bca991d704f6dcbf/|PARTNER_URL=http://download.oracle.com/otn-pub/java/jdk/8u162-b12/0da788060d494f5095bf8624735fa2f1/|' oracle-java8-installer.*
-sudo sed -i 's|SHA256SUM_TGZ="c78200ce409367b296ec39be4427f020e2c585470c4eed01021feada576f027f"|SHA256SUM_TGZ="68ec82d47fd9c2b8eb84225b6db398a72008285fafc98631b1ff8d2229680257"|' oracle-java8-installer.*
-sudo sed -i 's|J_DIR=jdk1.8.0_151|J_DIR=jdk1.8.0_162|' oracle-java8-installer.*
+# Ne fonctionne toujours pas...
+sudo sed -i 's|JAVA_VERSION=8u151|JAVA_VERSION=8u162|' /var/lib/dpkg/info/oracle-java8-installer.*
+sudo sed -i 's|PARTNER_URL=http://download.oracle.com/otn-pub/java/jdk/8u151-b12/e758a0de34e24606bca991d704f6dcbf/|PARTNER_URL=http://download.oracle.com/otn-pub/java/jdk/8u162-b12/0da788060d494f5095bf8624735fa2f1/|' /var/lib/dpkg/info/oracle-java8-installer.*
+sudo sed -i 's|SHA256SUM_TGZ="c78200ce409367b296ec39be4427f020e2c585470c4eed01021feada576f027f"|SHA256SUM_TGZ="68ec82d47fd9c2b8eb84225b6db398a72008285fafc98631b1ff8d2229680257"|' /var/lib/dpkg/info/oracle-java8-installer.*
+sudo sed -i 's|J_DIR=jdk1.8.0_151|J_DIR=jdk1.8.0_162|' /var/lib/dpkg/info/oracle-java8-installer.*
 
 sudo apt-get install -y oracle-java8-installer
 sudo apt-get install -y oracle-java8-set-default
@@ -523,7 +522,7 @@ sudo -u vagrant mkdir ~/gocode
 # /*===============================
 # =            MAILHOG            =
 # ===============================*/
-sudo go get github.com/mailhog/MailHog
+go get github.com/mailhog/MailHog
 
 # Ne marche pas via le VagrantFile
 # Enable and Turn on
@@ -541,7 +540,7 @@ sudo systemctl enable mailhog
 sudo systemctl start mailhog
 
 # Install Sendmail replacement for MailHog
-sudo go get github.com/mailhog/mhsendmail
+go get github.com/mailhog/mhsendmail
 sudo ln ~/gocode/bin/mhsendmail /usr/bin/mhsendmail
 sudo ln ~/gocode/bin/mhsendmail /usr/bin/sendmail
 sudo ln ~/gocode/bin/mhsendmail /usr/bin/mail
