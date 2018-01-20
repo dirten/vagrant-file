@@ -476,8 +476,6 @@ sudo apt-get update
 sudo apt-get install elasticsearch
 # Démarre automatiquement elastisearch au boot
 sudo /bin/systemctl daemon-reload
-sudo /bin/systemctl enable elasticsearch.service
-sudo systemctl start elasticsearch.service
 
    ELASTIC_CONFIG='
 cluster.name: "hooli"
@@ -488,6 +486,9 @@ network.publish_host: "0.0.0.0"
 http.port: 9200
 '
     echo "$ELASTIC_CONFIG" | sudo tee -a /etc/elasticsearch/elasticsearch.yml
+
+sudo /bin/systemctl enable elasticsearch.service
+sudo systemctl start elasticsearch.service
 
 # /*=============================
 # =            REDIS            =
@@ -509,9 +510,14 @@ reboot_webserver_helper
 # =            GOLANG            =
 # ==============================*/
 # Nécessaire pour MailHog
-sudo add-apt-repository -y ppa:longsleep/golang-backports
-sudo apt-get update
-sudo apt-get install -y golang-go
+sudo wget https://storage.googleapis.com/golang/go1.9.2.linux-amd64.tar.gz
+sudo tar -xvf go1.9.2.linux-amd64.tar.gz
+sudo mv go /usr/local
+mkdir gocode
+export GOPATH=/usr/home/gocode
+export GOROOT=/etc/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+
 
 # /*===============================
 # =            MAILHOG            =
