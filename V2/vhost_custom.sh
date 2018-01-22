@@ -10,7 +10,7 @@ MY_WEB_CONFIG='server {
         server_name website.local website.local;
 
         location / {
-            try_files $uri $uri/ =404;
+            try_files $uri $uri/ /index.php?$args;
         }
 
         location ~ \.php$ {
