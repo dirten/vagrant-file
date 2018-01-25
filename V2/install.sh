@@ -445,27 +445,19 @@ rvm use 2.4.1
 # /*======================
 # =            JAVA      =
 # ======================*/
-# https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-get-on-debian-8
-# JDK contient JRE donc inutile d'installer JRE avec : sudo apt-get install default-jre
-sudo apt-get install -y software-properties-common
-echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | sudo tee /etc/apt/sources.list.d/webupd8team-java.list
-echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list.d/webupd8team-java.list
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
+sudo apt-get -y install software-properties-common
+sudo add-apt-repository -y ppa:webupd8team/java
+sudo bash -c "echo deb http://http.debian.net/debian jessie-backports main >> /etc/apt/sources.list"
+sudo bash -c "echo deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main >> /etc/apt/sources.list.d/webupd8team-java.list"
+sudo bash -c "echo deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main >> /etc/apt/sources.list.d/webupd8team-java.list"
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
 sudo apt-get update
+sudo apt-get -y upgrade
 
-# Permet de faire une installation silencieuse de JAVA... obligatoire pour vagrant up
 echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
-echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
+echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selectionssudo 
 
-# see https://stackoverflow.com/questions/46815897/jdk-8-is-not-installed-error-404-not-found
-# Ne fonctionne toujours pas...
-sudo sed -i 's|JAVA_VERSION=8u151|JAVA_VERSION=8u162|' /var/lib/dpkg/info/oracle-java8-installer.*
-sudo sed -i 's|PARTNER_URL=http://download.oracle.com/otn-pub/java/jdk/8u151-b12/e758a0de34e24606bca991d704f6dcbf/|PARTNER_URL=http://download.oracle.com/otn-pub/java/jdk/8u162-b12/0da788060d494f5095bf8624735fa2f1/|' /var/lib/dpkg/info/oracle-java8-installer.*
-sudo sed -i 's|SHA256SUM_TGZ="c78200ce409367b296ec39be4427f020e2c585470c4eed01021feada576f027f"|SHA256SUM_TGZ="68ec82d47fd9c2b8eb84225b6db398a72008285fafc98631b1ff8d2229680257"|' /var/lib/dpkg/info/oracle-java8-installer.*
-sudo sed -i 's|J_DIR=jdk1.8.0_151|J_DIR=jdk1.8.0_162|' /var/lib/dpkg/info/oracle-java8-installer.*
-
-sudo apt-get install -y oracle-java8-installer
-sudo apt-get install -y oracle-java8-set-default
+sudo apt-get -y install oracle-java8-installer oracle-java8-set-default
 
 # /*===============================
 # =            ELASTICSEARCH      =
