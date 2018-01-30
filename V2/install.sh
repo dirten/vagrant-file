@@ -312,6 +312,7 @@ reboot_webserver_helper
 # =================================*/
 sudo apt-get install -y postgresql postgresql-contrib
 echo "CREATE ROLE root WITH LOGIN ENCRYPTED PASSWORD 'root';" | sudo -i -u postgres psql
+echo "ALTER ROLE root WITH CREATDB;" | sudo -i -u postgres psql
 sudo -i -u postgres createdb --owner=root hooli
 sudo apt-get install -y php7.1-pgsql
 # On met a jour les fichiers de configuration postgres que la connexion avec pgadmin se fasse facilement
