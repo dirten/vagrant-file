@@ -240,6 +240,7 @@ sudo apt-get install -y php7.1-tidy
 sudo apt-get install -y php7.1-xmlrpc
 sudo apt-get install -y php7.1-zip
 sudo apt-get install -y php7.1-xml
+sudo apt-get install -y php7.1-xdebug
 
 # Enchant
 sudo apt-get install -y libenchant-dev
