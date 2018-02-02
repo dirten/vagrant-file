@@ -17,9 +17,9 @@ MY_WEB_CONFIG='server {
     echo "$MY_WEB_CONFIG" | sudo tee /etc/nginx/sites-available/website.local
     sudo ln -s /etc/nginx/sites-available/website.local /etc/nginx/sites-enabled
 
-MY_KIBANA_CONFIG = 'server {
-    listen :80
-    server_name elk.local
+MY_KIBANA_CONFIG='server {
+    listen :80;
+    server_name elk.local;
 
     location / {
         proxy_pass http://localhost:5601;
