@@ -18,7 +18,7 @@ MY_WEB_CONFIG='server {
     sudo ln -s /etc/nginx/sites-available/website.local /etc/nginx/sites-enabled
 
 MY_KIBANA_CONFIG='server {
-    listen :80;
+    listen 80;
     server_name elk.local;
 
     location / {
