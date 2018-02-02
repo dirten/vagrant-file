@@ -305,6 +305,9 @@ sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again p
 sudo apt-get install -y mysql-server
 sudo mysqladmin -uroot -proot create hooli
 sudo apt-get install -y php7.1-mysql
+# Allow external tools to connect MySQL
+sudo sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
+
 reboot_webserver_helper
 
 
