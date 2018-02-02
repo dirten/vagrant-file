@@ -409,13 +409,13 @@ sudo mv wp-cli.phar /usr/local/bin/wp
 # /*==============================
 # =            NODEJS            =
 # ==============================*/
-sudo apt-get install -y nodejs
-sudo apt-get install -y npm
+# sudo apt-get install -y nodejs
+# sudo apt-get install -y npm
 
 # Use NVM though to make life easy
 wget -qO- https://raw.github.com/creationix/nvm/master/install.sh | bash
 source ~/.nvm/nvm.sh
-nvm install 6.10.3
+nvm install node
 
 # Node Packages
 # sudo npm install -g gulp
@@ -438,15 +438,16 @@ nvm install 6.10.3
 # /*============================
 # =            RUBY            =
 # ============================*/
-sudo apt-get install -y ruby
-sudo apt-get install -y ruby-dev
+# sudo apt-get install -y ruby
+# sudo apt-get install -y ruby-dev
+# sudo apt-get install -y ruby-full
 
 # Use RVM though to make life easy
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 curl -sSL https://get.rvm.io | bash -s stable
 source ~/.rvm/scripts/rvm
-rvm install 2.4.1
-rvm use 2.4.1
+rvm install 2.5.0
+rvm use 2.5.0
 
 # /*======================
 # =            JAVA      =
