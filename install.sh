@@ -417,7 +417,7 @@ wget -qO- https://raw.github.com/creationix/nvm/master/install.sh | bash
 source ~/.nvm/nvm.sh
 nvm install node
 
-# Node Packages
+# Node Packages on ne les installe plus en global ... c'est trop pas ce qu'on veut
 # sudo npm install -g gulp
 # sudo npm install -g grunt
 # sudo npm install -g bower
@@ -426,6 +426,9 @@ nvm install node
 # sudo npm install -g browserify
 # sudo npm install -g pm2
 # sudo npm install -g webpack
+
+# On each local project do => npm install --no-bin-links --save-dev webpack
+# This will install webpack locally.
 
 # /*============================
 # =            YARN            =
