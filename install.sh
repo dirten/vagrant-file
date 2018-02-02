@@ -427,8 +427,10 @@ nvm install node
 # sudo npm install -g pm2
 # sudo npm install -g webpack
 
+# This will install webpack locally (each project)
 # On each local project do => npm install --no-bin-links --save-dev webpack
-# This will install webpack locally.
+# https://github.com/npm/npm/issues/9901 les liens symboliques restent nécessaire en démarrant la VM avec une console admin
+# et VirtualBox en admin on arrive a installer tout cela avec les liens symboliques
 
 # /*============================
 # =            YARN            =
