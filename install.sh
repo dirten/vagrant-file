@@ -303,7 +303,7 @@ reboot_webserver_helper
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'
 sudo apt-get install -y mysql-server
-sudo mysqladmin -uroot -proot create scotchbox
+sudo mysqladmin -uroot -proot create hooli
 sudo apt-get install -y php7.1-mysql
 reboot_webserver_helper
 
