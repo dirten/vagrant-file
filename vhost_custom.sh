@@ -17,7 +17,7 @@ MY_WEB_CONFIG='server {
     echo "$MY_WEB_CONFIG" | sudo tee /etc/nginx/sites-available/website.local
     sudo ln -s /etc/nginx/sites-available/website.local /etc/nginx/sites-enabled
 
-MY_KIBANA_CONFIG='server {
+MY_KIBANA_CONFIG="server {
     listen 80;
     server_name elk.local;
 
@@ -29,6 +29,6 @@ MY_KIBANA_CONFIG='server {
         proxy_set_header Host $host;
         proxy_cache_bypass $http_upgrade;
     }
-}'
+}"
     echo "$MY_KIBANA_CONFIG" | sudo tee /etc/nginx/sites-available/kibana.local
     sudo ln -s /etc/nginx/sites-available/kibana.local /etc/nginx/sites-enabled
