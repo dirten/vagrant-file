@@ -146,7 +146,8 @@ if [ $INSTALL_NGINX_INSTEAD == 1 ]; then
         }
     }'
     echo "$MY_WEB_CONFIG" | sudo tee /etc/nginx/sites-available/default
-
+    
+    sudo usermod -a -G www-data vagrant
     sudo systemctl restart nginx
 
 fi
