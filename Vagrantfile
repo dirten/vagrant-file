@@ -7,6 +7,7 @@ sudo tee "/etc/profile.d/myvars.sh" > "/dev/null" <<EOF
 export GOPATH=/home/vagrant/gocode
 export GOROOT=/etc/go
 export PATH=/home/vagrant/gocode/bin:/etc/go/bin:$PATH
+export APPLICATION_ENV=development
 
 EOF
 SCRIPT
