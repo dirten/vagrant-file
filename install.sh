@@ -553,6 +553,10 @@ sudo systemctl start logstash.service
 sudo apt-get install -y kibana
 sudo sed -i "s/.*server.host.*/server.host: 0.0.0.0/" /etc/kibana/kibana.yml
 
+# Kibana enable service
+sudo systemctl enable kibana.service
+sudo systemctl start kibana.service
+
 # /*=============================
 # =            REDIS            =
 # =============================*/
