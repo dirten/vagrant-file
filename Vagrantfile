@@ -38,6 +38,22 @@ Vagrant.configure("2") do |config|
 
     config.vm.network "private_network", ip: "192.168.33.10"
 
+    # Rsync performant, permettant la synchro one-way (de host => guest) l'inverse pas possible
+    # Rsync avec le owner et le group www-data
+    config.vm.synced_folder ".",
+        "/var/www",
+        type: "rsync",
+        rsync_auto: true,
+        rsync__exclude: [".git/", ".idea/", ".build/", '.vagrant/', '.vendor/', '.public/assets'],
+        group:"www-data",
+        :owner=> 'www-data',
+        :mount_options => ["dmode=777","fmode=666"]
+
+    # Sync de type NFS pour le dossier assets généré côté guest afin qu'il redescende côté host et éviter les desync
+    config.vm.synced_folder "./website/public/assets/", "/var/www/website/public/assets", :mount_options => ["dmode=777","fmode=666"]
+   
+    
+    
     config.vm.synced_folder ".", "/var/www", group:"www-data", :mount_options => ["dmode=777", "fmode=666"]
 
     config.ssh.insert_key = false
