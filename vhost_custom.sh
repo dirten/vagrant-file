@@ -10,8 +10,16 @@ MY_WEB_CONFIG='server {
 
         server_name website.local website.local;
 
+        location ~ \.php$ {
+            include snippets/fastcgi-php.conf;
+            fastcgi_pass unix:/run/php/php7.1-fpm.sock;
+            fastcgi_index index.php;
+
+            fastcgi_param APPLICATION_ENV development
+            include fastcgi_params;
+        }
         location / {
-            try_files $uri $uri/ =404;
+            try_files $uri $uri/ /index.php$is_args$args;
         }
     }'
     echo "$MY_WEB_CONFIG" | sudo tee /etc/nginx/sites-available/website.local
