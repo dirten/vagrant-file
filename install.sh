@@ -503,40 +503,38 @@ sudo systemctl start elasticsearch.service
 # =            LOGSTASH         =
 # =============================*/
 sudo apt-get install -y logstash
-
-
-MY_LOGSTASH_NGINX_LOG = 'input {
-  file { path => "/home/vagrant/access_log"}
-}
-filter {
-    grok {
-      match => { "message" => ["%{IPORHOST:[nginx][access][remote_ip]} - %{DATA:[nginx][access][user_name]} \[%{HTTPDATE:[nginx][access][time]}\] \"%{WORD:[nginx][access][method]} %{DATA:[nginx][access][url]} HTTP/%{NUMBER:[nginx][access][http_version]}\" %{NUMBER:[nginx][access][response_code]} %{NUMBER:[nginx][access][body_sent][bytes]} \"%{DATA:[nginx][access][referrer]}\" \"%{DATA:[nginx][access][agent]}\""] }
-      remove_field => "message"
-    }
-    mutate {
-      add_field => { "read_timestamp" => "%{@timestamp}" }
-    }
-    date {
-      match => [ "[nginx][access][time]", "dd/MMM/YYYY:H:m:s Z" ]
-      remove_field => "[nginx][access][time]"
-    }
-    useragent {
-      source => "[nginx][access][agent]"
-      target => "[nginx][access][user_agent]"
-      remove_field => "[nginx][access][agent]"
-    }
-    geoip {
-      source => "[nginx][access][remote_ip]"
-      target => "[nginx][access][geoip]"
-    }
-}
-output {
-  elasticsearch {
-    hosts => "localhost:9200"
-    manage_template => false
-    index => "logstash-nginx-website-local"
-  }
-}'
+ MY_LOGSTASH_NGINX_LOG='input {
+          file { path => "/home/vagrant/access_log"}
+        }
+        filter {
+            grok {
+              match => { "message" => ["%{IPORHOST:[nginx][access][remote_ip]} - %{DATA:[nginx][access][user_name]} \[%{HTTPDATE:[nginx][access][time]}\] \"%{WORD:[nginx][access][method]} %{DATA:[nginx][access][url]} HTTP/%{NUMBER:[nginx][access][http_version]}\" %{NUMBER:[nginx][access][response_code]} %{NUMBER:[nginx][access][body_sent][bytes]} \"%{DATA:[nginx][access][referrer]}\" \"%{DATA:[nginx][access][agent]}\""] }
+              remove_field => "message"
+            }
+            mutate {
+              add_field => { "read_timestamp" => "%{@timestamp}" }
+            }
+            date {
+              match => [ "[nginx][access][time]", "dd/MMM/YYYY:H:m:s Z" ]
+              remove_field => "[nginx][access][time]"
+            }
+            useragent {
+              source => "[nginx][access][agent]"
+              target => "[nginx][access][user_agent]"
+              remove_field => "[nginx][access][agent]"
+            }
+            geoip {
+              source => "[nginx][access][remote_ip]"
+              target => "[nginx][access][geoip]"
+            }
+        }
+        output {
+          elasticsearch {
+            hosts => "localhost:9200"
+            manage_template => false
+            index => "logstash-nginx-website-local"
+          }
+        }'
 echo "$MY_LOGSTASH_NGINX_LOG" | sudo tee /etc/logstash/conf.d/website.local.conf
 
 sudo systemctl enable logstash.service
