@@ -5,7 +5,7 @@ MY_WEB_CONFIG='server {
         listen [::]:80;
 
         root /var/www/website/public;
-        index index.html index.htm index.nginx-debian.html;
+        index index.php
         access_log /home/vagrant/access_log;
 
         server_name website.local website.local;
@@ -13,15 +13,15 @@ MY_WEB_CONFIG='server {
         location ~ \.php$ {
             include snippets/fastcgi-php.conf;
             fastcgi_pass unix:/run/php/php7.1-fpm.sock;
-            fastcgi_index index.php;
 
-            fastcgi_param APPLICATION_ENV development
+            fastcgi_param APPLICATION_ENV development;
             include fastcgi_params;
         }
         location / {
             try_files $uri $uri/ /index.php$is_args$args;
         }
     }'
+    
     echo "$MY_WEB_CONFIG" | sudo tee /etc/nginx/sites-available/website.local
     sudo ln -s /etc/nginx/sites-available/website.local /etc/nginx/sites-enabled
 
