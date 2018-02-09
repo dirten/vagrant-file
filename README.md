@@ -1,4 +1,4 @@
-# Welcome on my Vagrantfile largly inspired by Scotchbox
+# Welcome on my Vagrantfile largely inspired by Scotchbox
 Here you can find a ready to go Web developper box with :
 
 - Nginx configured and tested
