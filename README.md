@@ -17,7 +17,7 @@ Here you can find a ready to go Web developper box with :
 
 You also have a website.local vhost available for a ready to go box
 
-You should have inserted into your vhost those 2 lines
+You should have inserted into your host (/etc/hosts) those 2 lines
 
 ```
 192.168.33.10 elk.local
