@@ -4,53 +4,11 @@
 # =            VARIABLES            =
 # =================================*/
 INSTALL_NGINX_INSTEAD=1
-WELCOME_MESSAGE='
-░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-░░░░░░░░░░░░░░░░░░░░░▓████████████████████████▒░░░░░░░░░░░░░░░░░░░░
-░░░░░░░░░░░░░░░░░░▓█████▓▒░░░░░░░░░░░░░░░▒██████▒░░░░░░░░░░░░░░░░░░
-░░░░░░░░░░░░░░░░████▒░░░░░░░░░░░░░░░░░░░░░░░░░▓███▒░░░░░░░░░░░░░░░░
-░░░░░░░░░░░░░░░███░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░███░░░░░░░░░░░░░░░
-░░░░░░░░░░░░░▒██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒██░░░░░░░░░░░░░░
-░░░░░░░░░░░░▒██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██░░░░░░░░░░░░░
-░░░░░░░░░░░░██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██░░░░░░░░░░░░
-░░░░░░░░░░░██▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒░░██░░░░░░░░░░░░
-░░░░░░░░░░░██░░██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██░░██░░░░░░░░░░░
-░░░░░░░░░░░██░░██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██░░██░░░░░░░░░░░
-░░░░░░░░░░░██░░██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██░░██░░░░░░░░░░░
-░░░░░░░░░░░██▒░██▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██▓░▒██░░░░░░░░░░░
-░░░░░░░░░░░░██░░██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██░░██░░░░░░░░░░░░
-░░░░░░░░░░░░██▒░██░░░░░▒▒▓███▒░░░░░░░▒███▓▒▒░░░░░██░▓██░░░░░░░░░░░░
-░░░░░░░░░░░░░██░██░░██████████▒░░░░░▓██████████░░██▒██░░░░░░░░░░░░░
-░░░░░░░░░░░░░░████░████████████░░░░░████████████░████░░░░░░░░░░░░░░
-░░░░░░░░░░░░░░░███░▒██████████░░░░░░░██████████▒░██▒░░░░░░░░░▒░░░░░
-░░░▒████░░░░░░░▓█▒░░█████████░░░░░░░░░█████████░░▒█▓░░░░░░▓████░░░░
-░░░██░▒██▒░░░░░██░░░░██████▓░░░░█░█░░░░███████░░░░██░░░░░███░░██░░░
-░░░██░░░██▓░░░░██░░░░░░▒▓▓░░░░▒██░██░░░░░▓▓▒░░░░░▒██░░░░███░░░██░░░
-░▓██▒░░░░████▓░░██░░░░░░░░░░░░███░███░░░░░░░░░░░░██░░█████░░░░▓██▒░
-██▓░░░░░░░░▒████████▓░░░░░░░░████░███▓░░░░░░░▒▓████████░░░░░░░░░███
-██▓▒▓███▓░░░░░░▓████████▓░░░░████░███▓░░░░▓████████▓░░░░░░████▓▓███
-░███████████▒░░░░░░███████░░░░██░░░██░░░░██████▓░░░░░░▓███████████░
-░░░░░░░░░░▓█████░░░░██▓▓░██░░░░░░░░░░░░░██░█▒██░░░▒█████▓░░░░░░░░░░
-░░░░░░░░░░░░░▒█████▒▒█▓█░███▓▓▒▒▒▓▒▒▓▓▓███▒███░▓█████░░░░░░░░░░░░░░
-░░░░░░░░░░░░░░░░░▒████▒▓█▒▒█░█▒█░█░█▓█▒█▓░█░█████▒░░░░░░░░░░░░░░░░░
-░░░░░░░░░░░░░░░░░░░░██░░██▓█▓█▓█▒█▒█▓█▓████░▓█▓░░░░░░░░░░░░░░░░░░░░
-░░░░░░░░░░░░░░░░░▓████▓░▓█▓█░█▒█░█░█▒█▒███▒░██████░░░░░░░░░░░░░░░░░
-░░░░░░░░░░░░░▓█████░░██░░░▒█████▓█▓█████▒░░░██░▒█████▓░░░░░░░░░░░░░
-░░░░▒██████████▓░░░░░███░░░░░░░░░░░░░░░░░░░██▒░░░░░▓██████████▒░░░░
-░░░░██░░░▓▓▓░░░░░░▒██████▓░░░░░░░░░░░░░░░███████▒░░░░░░▓▓▒░░▒██░░░░
-░░░░▓██░░░░░░░░▓████▓░░░█████▒░░░░░░▒▓█████░░░▓████▓░░░░░░░▒██▓░░░░
-░░░░░░███░░░░████▒░░░░░░░░▓█████████████▒░░░░░░░░▒████░░░░███░░░░░░
-░░░░░░░██░░░██▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓██░░░██░░░░░░░
-░░░░░░░██▒▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒██▒▓██░░░░░░░
-░░░░░░░░████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░████░░░░░░░░
-░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
- _       __     __                             __  __            ___ 
-| |     / /__  / /________  ____ ___  ___     / / / /___  ____  / (_)
-| | /| / / _ \/ / ___/ __ \/ __ `__ \/ _ \   / /_/ / __ \/ __ \/ / / 
-| |/ |/ /  __/ / /__/ /_/ / / / / / /  __/  / __  / /_/ / /_/ / / /  
-|__/|__/\___/_/\___/\____/_/ /_/ /_/\___/  /_/ /_/\____/\____/_/_/   
-
+WELCOME_MESSAGE=' _       __     __                             
+| |     / /__  / /________  ____ ___  ___
+| | /| / / _ \/ / ___/ __ \/ __ `__ \/ _ \
+| |/ |/ /  __/ / /__/ /_/ / / / / / /  __/
+|__/|__/\___/_/\___/\____/_/ /_/ /_/\___/
 '
 
 reboot_webserver_helper() {
@@ -320,7 +278,7 @@ echo "CREATE ROLE root WITH LOGIN ENCRYPTED PASSWORD 'root';" | sudo -i -u postg
 echo "ALTER ROLE root WITH CREATDB;" | sudo -i -u postgres psql
 sudo -i -u postgres createdb --owner=root hooli
 sudo apt-get install -y php7.1-pgsql
-# On met a jour les fichiers de configuration postgres que la connexion avec pgadmin se fasse facilement
+# Add configuration to have external access like Pgadmin
 sudo echo "host all all all password" | sudo tee -a /etc/postgresql/9.4/main/pg_hba.conf > /dev/null
 sudo echo "listen_addresses = '*'" | sudo tee -a /etc/postgresql/9.4/main/postgresql.conf > /dev/null
 reboot_webserver_helper
@@ -430,8 +388,7 @@ nvm install node
 
 # This will install webpack locally (each project)
 # On each local project do => npm install --no-bin-links --save-dev webpack
-# https://github.com/npm/npm/issues/9901 les liens symboliques restent nécessaire en démarrant la VM avec une console admin
-# et VirtualBox en admin on arrive a installer tout cela avec les liens symboliques
+# https://github.com/npm/npm/issues/9901 On windows this is buggy because symlink are not available for commons users
 
 # /*============================
 # =            YARN            =
@@ -482,7 +439,7 @@ sudo wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-ke
 sudo echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-6.x.list
 sudo apt-get update
 sudo apt-get install elasticsearch
-# Démarre automatiquement elastisearch au boot via un daemon
+# elasticsearch will start on boot
 sudo /bin/systemctl daemon-reload
 
    ELASTIC_CONFIG='
@@ -497,7 +454,7 @@ http.port: 9200
 
 sudo /bin/systemctl enable elasticsearch.service
 sudo systemctl start elasticsearch.service
-# changer les Heaps 512m pour elastic dans sudo vim /etc/elasticsearch/jvm.options
+# strongly advised to changes heaps to lower ratio by editing this file : sudo vim /etc/elasticsearch/jvm.options
 
 # /*=============================
 # =            LOGSTASH         =
@@ -586,7 +543,7 @@ sudo -u vagrant mkdir ~/gocode
 # ===============================*/
 go get github.com/mailhog/MailHog
 
-# Ne marche pas via le VagrantFile
+# don't work ? need tests !
 # Enable and Turn on
 sudo tee /etc/systemd/system/mailhog.service <<EOL
 [Unit]
